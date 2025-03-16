@@ -24,6 +24,7 @@ def times():
     while temptime>-1:
         #coversion of total time into minutes and seconds
         min,secs=divmod(temptime,60)
+        hour=0
         if min>60:
             #coversion of total time into hour and minutes
             hour,min=divmod(min,60)
@@ -32,6 +33,8 @@ def times():
         s.set("{00:2d}".format(secs))
         screen.update()
         time.sleep(1)
+        if temptime==0:
+            messagebox.showinfo("countdown","Time is up!")
         temptime-=1
 b1=Button(screen,text="set time countdown",width=15,background="gold",command=times)
 b1.place(x=2,y=60)
