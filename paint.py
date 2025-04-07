@@ -47,6 +47,9 @@ class drawing(object):
         elif self.tool=="brush":
             brushsize=self.thickness*2
             self.screen.create_oval(event.x-brushsize/2,event.y-brushsize/2,event.x+brushsize/2,event.y+brushsize/2,fill=paintcolor,outline=paintcolor)
+        elif self.tool=="eraser":
+            if self.x and self.y:
+                self.screen.create_line(self.x,self.y,event.x,event.y,width=self.thickness,fill="white",capstyle=ROUND,smooth=TRUE,splinesteps=36)
         self.x=event.x
         self.y=event.y
     def usingbrush(self):
