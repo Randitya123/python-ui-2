@@ -1,4 +1,4 @@
- from tkinter import*
+from tkinter import*
 from tkinter.colorchooser import askcolor
 
 class drawing(object):
@@ -6,9 +6,9 @@ class drawing(object):
     defaultcol="black"
     def __init__(self):
         self.s=Tk()
-        self.pen=Button(self.s,text="pen",font=("cambria",15))
+        self.pen=Button(self.s,text="pen",font=("cambria",15),command=self.penn)
         self.pen.grid(row=0,column=0)
-        self.brush=Button(self.s,text="brush",font=("cambria",15))
+        self.brush=Button(self.s,text="brush",font=("cambria",15),command=self.paint)
         self.brush.grid(row=0,column=1)
         self.colors=Button(self.s,text="color",font=("cambria",15),command=self.colour)
         self.colors.grid(row=0,column=2)
@@ -44,6 +44,10 @@ class drawing(object):
         if self.tool=="pen":
             if self.x and self.y:
                 self.screen.create_line(self.x,self.y,event.x,event.y,width=self.thickness,fill=paintcolor,capstyle=ROUND,smooth=TRUE,splinesteps=36)
+        elif self.tool=="brush":
+            brushsize=self.thickness
+            self.screen.create_oval(event.x-brushsize/2,event.y-brushsize/2,event.x+brushsize/2,event.y+brushsize/2,fill=paintcolor,outline=paintcolor)
+
         self.x=event.x
         self.y=event.y
     def colour(self):
