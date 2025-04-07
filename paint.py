@@ -36,6 +36,7 @@ class drawing(object):
         self.eraser_on=False
         self.activebutton=self.pen
         self.tool="pen"
+        self.screen.bind('<B1-Motion>', self.paint )
     def paint(self,event):
         self.thickness=self.pthick.get(  )
         paintcolor="white" if self.eraser_on else self.color
