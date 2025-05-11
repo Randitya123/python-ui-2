@@ -1,6 +1,7 @@
 from tkinter import*
 from tkinter.filedialog import*
 from tkinter import messagebox
+import os
 #4from tkinter.ttk import*
 screen=Tk()
 #function 
@@ -23,12 +24,24 @@ def add():
         Adress[key]=(c3.get(),c4.get(),c5.get(),c6.get())
         clear()
 
-#def edit():
+def edit():
+    clear()
+    index=list1.curselection()
+    if index:
+        c2.insert(0,list1.get(index))
+        details=Adress[c2.get()]
+        #addingdeataiilstotextbpoxes
+        c3.insert(0,details[0])
+        c4.insert(0,details[1])
+        c5.insert(0,details[2])
+        c6.insert(0,details[3])
+    else:
+        messagebox.showerror("Error","You did something wrong")
 def display(event):
     window=Toplevel(screen)
     index=list1.curselection()
     contact=""
-    if index==True:
+    if index:
         key=list1.get(index)
         contact="NAME:+key"+"\n\n"
         details=Adress[key]
@@ -39,12 +52,40 @@ def display(event):
     label=Label(window)
     label.grid(row=0,column=0)
     label.configure(text=contact)
+
+def delete():
+    index=list1.curselection()
+    if index:
+        del Adress[list1.get(index)]
+        list1.delete(index)
+        clear
+    else:
+        messagebox.showerror("Error","You did something wrong")
+     
+def save():
+    ext=asksaveasfile(defaultextension=".txt")
+    if ext:
+        print(Adress,file=ext)
+    else:
+        messagebox.showerror("Error","You did something wrong")
+
+def open():
+    global Adress
+    ext=askopenfile(title="Open File")
+    if ext:
+        Adress=eval(ext.read())
+        for i in Adress.keys():
+            list1.insert(END,i)
+        l1.configure(text=os.path.basename(ext.name))
+    else:
+        messagebox.showerror("Error","You did something wrong")
+
 #widgets
 screen.configure(bg="black")
 l1=Label(screen,text="My Adress Book",width=25)
 l1.grid(row=0,column=0,pady=10, columnspan=3)
 
-b1=Button(screen,text="OPEN",background="BLACK",fg="WHITE")
+b1=Button(screen,text="OPEN",background="BLACK",fg="WHITE",command=open)
 b1.grid(row=0,column=4,pady=10)
 
 list1=Listbox(screen,height=15,width=30)
@@ -81,16 +122,16 @@ c5.grid(row=5,column=4,padx=5)
 c6=Entry(screen,background="BLACK",fg="WHITE")
 c6.grid(row=6,column=4,padx=5)
 
-b2=Button(screen,text="Edit",background="BLACK",fg="WHITE")
+b2=Button(screen,text="Edit",background="BLACK",fg="WHITE",command=edit)
 b2.grid(row=7,column=0,padx=12,pady=12)
 
-b3=Button(screen,text="Delete",background="BLACK",fg="WHITE")
+b3=Button(screen,text="Delete",background="BLACK",fg="WHITE",command=delete)
 b3.grid(row=7,column=1,pady=12)
 
 b4=Button(screen,text="Update/Add",background="BLACK",fg="WHITE",command=add)
 b4.grid(row=7,column=4,pady=12)
 
-b5=Button(screen,text="Save",background="BLACK",fg="WHITE")
+b5=Button(screen,text="Save",background="BLACK",fg="WHITE",command=save)
 b5.grid(row=8,column=1,pady=10,columnspan=3)
 
 screen.mainloop()
