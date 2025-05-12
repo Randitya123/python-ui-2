@@ -26,7 +26,7 @@ num=random.randrange(0,len(jumbled_list))
 dt=""
 #functions
 def reset():
-    global list1,jumbled_list
+    global list1,jumbled_list,num
     num=random.randrange(0,len(jumbled_list))
     l2.config(text=jumbled_list[num])
     c1.delete(0,END)
